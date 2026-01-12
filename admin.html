@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - Bookings</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h1 class="mb-4">Admin — Local Bookings</h1>
+    <p class="text-muted">This page shows me all bookings saved in localStorage / local bookings.</p>
+
+    <div class="mb-3">
+      <button id="refreshBtn" class="btn btn-secondary">Refresh</button>
+      <button id="syncAllBtn" class="btn btn-primary">Sync All to Backend</button>
+      <button id="deleteAllBtn" class="btn btn-danger">Delete All Local</button>
+      <a href="index.html" class="btn btn-outline-primary">Back to Site</a>
+    </div>
+
+    <div id="status" class="mb-3" aria-live="polite"></div>
+
+    <div class="table-responsive">
+      <table class="table table-striped" id="bookingsTable">
+        <thead>
+          <tr>
+            <th></th>
+            <th>#</th>
+            <th>Name</th>
+            <th>Date/Time</th>
+            <th>People</th>
+            <th>Saved At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const statusEl = document.getElementById('status');
+    const tableBody = document.querySelector('#bookingsTable tbody');
+
+    function getLocalBookings() {
+      return JSON.parse(localStorage.getItem('localBookings') || '[]');
+    }
+
+    function saveLocalBookings(list) {
+      localStorage.setItem('localBookings', JSON.stringify(list));
+    }
+
+    function render() {
+      const list = getLocalBookings();
+      tableBody.innerHTML = '';
+      if (!list.length) {
+        tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No local bookings</td></tr>';
+        return;
+      }
+      list.forEach((b, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input type="checkbox" data-index="${i}"></td>
+          <td>${i+1}</td>
+          <td>${escapeHtml(b.name)}</td>
+          <td>${escapeHtml(b.datetime)}</td>
+          <td>${escapeHtml(String(b.people))}</td>
+          <td>${escapeHtml(b.savedAt || '')}</td>
+          <td>
+            <button class="btn btn-sm btn-primary sync-btn" data-index="${i}">Sync</button>
+            <button class="btn btn-sm btn-danger del-btn" data-index="${i}">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }
+
+    function escapeHtml(s) {
+      return String(s || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    async function syncBooking(index) {
+      const list = getLocalBookings();
+      const b = list[index];
+      if (!b) return;
+      try {
+        const resp = await fetch('http://127.0.0.1:5000/api/bookings', {
+          method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ name: b.name, datetime: b.datetime, people: b.people })
+        });
+        if (!resp.ok) {
+          const data = await resp.json().catch(()=>null);
+          throw new Error((data && data.errors) ? data.errors.join('; ') : 'Server error');
+        }
+        // remove from local list
+        list.splice(index, 1);
+        saveLocalBookings(list);
+        render();
+        setStatus('Synced booking: ' + b.name);
+      } catch (err) {
+        console.error(err);
+        setStatus('Sync failed: ' + (err.message || err), true);
+      }
+    }
+
+    async function syncAll() {
+      const list = getLocalBookings();
+      if (!list.length) { setStatus('No local bookings to sync.'); return; }
+      setStatus('Syncing...');
+      for (let i = 0; i < list.length; ) {
+        try {
+          await syncBooking(i); // after successful sync, list length decreases
+        } catch (err) {
+          // stop on first failure
+          setStatus('Stopped on error: ' + (err.message || err), true);
+          return;
+        }
+      }
+      setStatus('All bookings synced.');
+    }
+
+    function deleteAll() {
+      if (!confirm('Delete all local bookings? This cannot be undone.')) return;
+      localStorage.removeItem('localBookings');
+      render();
+      setStatus('All local bookings deleted.');
+    }
+
+    function setStatus(msg, isError=false) {
+      statusEl.textContent = msg;
+      statusEl.className = isError ? 'text-danger' : 'text-success';
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', render);
+    document.getElementById('syncAllBtn').addEventListener('click', syncAll);
+    document.getElementById('deleteAllBtn').addEventListener('click', deleteAll);
+
+    tableBody.addEventListener('click', (e) => {
+      const btn = e.target.closest('.sync-btn, .del-btn');
+      if (!btn) return;
+      const idx = Number(btn.dataset.index);
+      if (btn.classList.contains('sync-btn')) syncBooking(idx);
+      else if (btn.classList.contains('del-btn')) {
+        if (!confirm('Delete this local booking?')) return;
+        const list = getLocalBookings(); list.splice(idx,1); saveLocalBookings(list); render(); setStatus('Deleted');
+      }
+    });
+
+    // initial render
+    render();
+  </script>
+</body>
+</html>
