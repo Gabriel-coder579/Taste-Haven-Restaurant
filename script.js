@@ -4,18 +4,17 @@ let subtotal = 0; // sum of item base prices
 let taxTotal = 0; // sum of taxes (15% per item)
 let total = 0; // subtotal + taxTotal
 
-// Configuration: set mode to 'auto' to try Flask then fallback to localStorage,
-// or set to 'flask', 'local', or 'supabase' explicitly.
+
 const BACKEND_MODE = 'auto';
 // If you want to use Supabase, set these values (not recommended in public client)
 const SUPABASE_URL = '';
 const SUPABASE_KEY = ''; // Service role key should never be in client-side code
 
-// Finding all the "Add to Cart" buttons
+// Finding all "Add to Cart" buttons
 const addButtons = document.querySelectorAll('.product-card .btn-danger');
 const cartBtn = document.querySelector('.btn-outline-light');
 
-// manipulating  each button when user clicks
+// manipulating  each button
 addButtons.forEach((button) => {
   button.addEventListener('click', () => {
     
@@ -197,4 +196,5 @@ async function confirmBooking() {
     console.error('Booking confirm error:', err);
   }
 }
+
   
