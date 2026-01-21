@@ -4,212 +4,257 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taste Haven</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
+     <!-- Navbar with a red (bg-danger) background, 
+    -also (sticky-top),making sure the nav bar is stuck at the top even when i scroll to the bottom of the page.
+    -(data-bs-toggle="modal"), tells bootstrap to open a modal when the button is clicked.
+    
+    -->
     <nav class="navbar navbar-dark bg-danger sticky-top">
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1">🍽️ Taste Haven</span>
-            <button class="btn btn-outline-light">🛒 Cart</button>
+            <div>
+                <button class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                    Book a Table 
+                </button>
+                <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#cartModal" onclick="showCart()">
+                    🛒 Cart <span id="cart-count" class="badge bg-dark">0</span>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <div class="hero-section text-center py-5">
+    <header class="hero-section text-center py-5 bg-dark text-white">
         <div class="container">
-            <h1 class="display-4 fw-bold text-white mb-3">Welcome to Taste Haven</h1>
-            <p class="lead text-light">Experience the art of flavor. Choose from our finest offerings and treat yourself today.</p>
+            
+            <!--
+            -display-1: makes the text very large.
+            -href="#menu", when he link button (Order Online)
+            is clicked it smoothly slides down to the section with the menu. 
+            -->
+            <h1 class="display-1 fw-bold">Taste Haven</h1>
+            <p class="lead">Experience the art of flavor, delivered to your doorstep.</p>
+            <a href="#menu" class="btn btn-danger btn-lg">Order Online</a>
         </div>
-    </div>
-
-    <section class="py-5" id="menu-section">
-        <div class="container">
-
-             <div class="alert alert-info" role="alert">
-                Our restaurant is open 24 hours. <br>
-                We make deliveries at an extra fee for those ordering online.
-            </div>
-
-            <div class="col-12">
-                <div class="text-center">
-                    <!-- <button type="button" class="btn btn-primary">Order online</button> -->
-                    <a href="#menu-section" class="btn btn-primary">Order Online</a>
-
-                </div><br>
-                <div class="text-center">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingModal">Book a Table</button>
-                </div>
-
-            </div><br><br>
-
-            <h2 class="text-center mb-5 fw-bold text-dark">Our Menu</h2>
-            <div class="product-container">
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="burger1.jpeg" alt="burger" class="product-image">
-                        <div class="price-badge">$10</div>
-                    </div>
-                    <div class="product-content">
-                        <h5 class="product-name">Burger</h5>
-                        <p class="text-muted small">Delicious handcrafted burger</p>
-                        <button class="btn btn-danger w-100">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="cake.jpg" alt="cake" class="product-image">
-                        <div class="price-badge">$20</div>
-                    </div>
-                    <div class="product-content">
-                        <h5 class="product-name">Cake</h5>
-                        <p class="text-muted small">Fresh baked delights</p>
-                        <button class="btn btn-danger w-100">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="pasta.jpg" alt="pasta" class="product-image">
-                        <div class="price-badge">$15</div>
-                    </div>
-                    <div class="product-content">
-                        <h5 class="product-name">Pasta</h5>
-                        <p class="text-muted small">Authentic Italian flavor</p>
-                        <button class="btn btn-danger w-100">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="chicken.jpg" alt="Chicken" class="product-image">
-                        <div class="price-badge">$20</div>
-                    </div>
-                    <div class="product-content">
-                        <h5 class="product-name">Chicken</h5>
-                        <p class="text-muted small">Tender and perfectly seasoned</p>
-                        <button class="btn btn-danger w-100">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="coffee.jpg" alt="coffee" class="product-image">
-                        <div class="price-badge">$10</div>
-                    </div>
-                    <div class="product-content">
-                        <h5 class="product-name">Coffee</h5>
-                        <p class="text-muted small">Premium espresso blend</p>
-                        <button class="btn btn-danger w-100">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="fries.jpg" alt="fries" class="product-image">
-                        <div class="price-badge">$9</div>
-                    </div>
-                    <div class="product-content">
-                        <h5 class="product-name">Fries</h5>
-                        <p class="text-muted small">Golden crispy perfection</p>
-                        <button class="btn btn-danger w-100">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="pizza1.jpg" alt="pizza" class="product-image">
-                        <div class="price-badge">$14</div>
-                    </div>
-                    <div class="product-content">
-                        <h5 class="product-name">Pizza</h5>
-                        <p class="text-muted small">Stone-baked Italian style</p>
-                        <button class="btn btn-danger w-100">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="salad.jpg" alt="salad" class="product-image">
-                        <div class="price-badge">$12</div>
-                    </div>
-                    <div class="product-content">
-                        <h5 class="product-name">Salad</h5>
-                        <p class="text-muted small">Fresh garden vegetables</p>
-                        <button class="btn btn-danger w-100">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="watermelonjuice.jpg" alt="watermelon juice" class="product-image">
-                        <div class="price-badge">$10</div>
-                    </div>
-                    <div class="product-content">
-                        <h5 class="product-name">Watermelon Juice</h5>
-                        <p class="text-muted small">Refreshing summer drink</p>
-                        <button class="btn btn-danger w-100">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="steak.jpg" alt="steak" class="product-image">
-                        <div class="price-badge">$25</div>
-                    </div>
-                    <div class="product-content">
-                        <h5 class="product-name">Steak</h5>
-                        <p class="text-muted small">Premium quality cuts</p>
-                        <button class="btn btn-danger w-100">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="orangejuice.jpg" alt="orange juice" class="product-image">
-                        <div class="price-badge">$10</div>
-                    </div>
-                    <div class="product-content">
-                        <h5 class="product-name">Orange Juice</h5>
-                        <p class="text-muted small">Fresh squeezed daily</p>
-                        <button class="btn btn-danger w-100">Add to Cart</button>
+    </header>
+    <main class="container my-5" id="menu">
+       
+            <!-- row g-4 creates a grid and makes the cards to stand side by side,
+            it adds a gap to cards do not touch each other.
+            col-md-4: splits the screen into 12 parts. 
+            4 means this card takes up 1 third of the screen on medium and larger devices (4+4+4=12).
+            card-img-top: ensures the image sits at the top of the card without overlapping the text.
+            
+            -->
+        
+        <h2 class="text-center mb-4">Our Delicious Menu</h2>
+    
+        <div class="row g-4 justify-content-center" id="product-list">
+        
+            <div class="col-md-4 col-lg-3"> <div class="card product-card h-100">
+                <img src="burger1.jpeg" class="card-img-top" alt="Burger">
+                <div class="card-body">
+                    <h5 class="product-name">Master Burger</h5>
+                    <p class="text-muted small">Juicy beef patty...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price-badge h5 text-danger">$12.99</span>
+                        <button class="btn btn-danger">Add to Cart</button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+
+        <div class="col-md-4 col-lg-3">
+            <div class="card product-card h-100">
+                <img src="cake.jpg" class="card-img-top" alt="Cake">
+                <div class="card-body">
+                    <h5 class="product-name">Chocolate Cake</h5>
+                    <p class="text-muted small">Rich chocolate cake...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price-badge h5 text-danger">$15.99</span>
+                        <button class="btn btn-danger">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-3">
+            <div class="card product-card h-100">
+                <img src="pasta.jpg" class="card-img-top" alt="Pasta">
+                <div class="card-body">
+                    <h5 class="product-name">Italian Pasta</h5>
+                    <p class="text-muted small">Classic Italian pasta...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price-badge h5 text-danger">$10.99</span>
+                        <button class="btn btn-danger">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+            <div class="card product-card h-100">
+                <img src="chicken.jpg" class="card-img-top" alt="Chicken">
+                <div class="card-body">
+                    <h5 class="product-name">Grilled Chicken</h5>
+                    <p class="text-muted small">Tender grilled chicken...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price-badge h5 text-danger">$13.99</span>
+                        <button class="btn btn-danger">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+            <div class="card product-card h-100">
+                <img src="coffee.jpg" class="card-img-top" alt="Coffee">
+                <div class="card-body">
+                    <h5 class="product-name">Italian Coffee</h5>
+                    <p class="text-muted small">Rich Italian coffee...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price-badge h5 text-danger">$9.99</span>
+                        <button class="btn btn-danger">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+            <div class="card product-card h-100">
+                <img src="fries.jpg" class="card-img-top" alt="Fries">
+                <div class="card-body">
+                    <h5 class="product-name">French Fries</h5>
+                    <p class="text-muted small">Crispy French fries...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price-badge h5 text-danger">$11.99</span>
+                        <button class="btn btn-danger">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+            <div class="card product-card h-100">
+                <img src="orangejuice.jpg" class="card-img-top" alt="Orange Juice">
+                <div class="card-body">
+                    <h5 class="product-name">Orange Juice</h5>
+                    <p class="text-muted small">Freshly squeezed orange juice...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price-badge h5 text-danger">$6.99</span>
+                        <button class="btn btn-danger">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+            <div class="card product-card h-100">
+                <img src="pizza1.jpg" class="card-img-top" alt="Pizza">
+                <div class="card-body">
+                    <h5 class="product-name">Italian Pizza</h5>
+                    <p class="text-muted small">Classic Italian pizza...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price-badge h5 text-danger">$14.99</span>
+                        <button class="btn btn-danger">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+            <div class="card product-card h-100">
+                <img src="salad.jpg" class="card-img-top" alt="Salad">
+                <div class="card-body">
+                    <h5 class="product-name">Italian Salad</h5>
+                    <p class="text-muted small">Fresh Italian salad...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price-badge h5 text-danger">$5.99</span>
+                        <button class="btn btn-danger">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+            <div class="card product-card h-100">
+                <img src="steak.jpg" class="card-img-top" alt="Steak">
+                <div class="card-body">
+                    <h5 class="product-name">Italian Steak</h5>
+                    <p class="text-muted small">Classic Italian steak...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price-badge h5 text-danger">$12.99</span>
+                        <button class="btn btn-danger">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+            <div class="card product-card h-100">
+                <img src="watermelonjuice.jpg" class="card-img-top" alt="Watermelon Juice">
+                <div class="card-body">
+                    <h5 class="product-name">Watermelon Juice</h5>
+                    <p class="text-muted small">Freshly squeezed watermelon juice...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price-badge h5 text-danger">$10.99</span>
+                        <button class="btn btn-danger">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 
+    modal fade: creates a modal that fades in smoothly instead of appearing abruptly.
+    tabindex="-1": makes sure the modal is not focusable when it's hidden.
+    form-control: make inputs look clean, rounded, and take up the full width.
+    onclick="confirmBooking()": calls the confirmBooking function when the button is clicked.
+    -->
     <div class="modal fade" id="bookingModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Book a Table 🍽️</h5>
+                    <h5 class="modal-title">Make a Reservation</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                            <div class="modal-body">
-                                <form id="bookingForm" novalidate>
-                                    <div class="mb-3">
-                                        <label for="bookingName" class="form-label">Your Name</label>
-                                        <input id="bookingName" type="text" class="form-control" placeholder="Your Name" required>
-                                        <div class="invalid-feedback">Please enter your name.</div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="bookingDatetime" class="form-label">Date & time</label>
-                                        <input id="bookingDatetime" type="datetime-local" class="form-control" required>
-                                        <div class="invalid-feedback">Please choose a future date and time.</div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="bookingPeople" class="form-label">Number of people</label>
-                                        <input id="bookingPeople" type="number" class="form-control" placeholder="How many people?" min="1" required>
-                                        <div class="invalid-feedback">Please enter at least 1 person.</div>
-                                    </div>
-                                </form>
-                            </div>
-      <div class="modal-footer">
-        <button class="btn btn-danger w-100" onclick="confirmBooking()">Confirm Reservation</button>
-      </div>
+                <div class="modal-body">
+                    <form id="bookingForm">
+                        <input type="text" id="bookingName" class="form-control mb3" placeholder="Your name" required>
+                        <input type="datetime-local" id="bookingDateTime" class="form-control mb3" required>
+                        <input type="number" id="bookingGuests" class="form-control mb3" placeholder="Number of guests" required>
+                        <button type="button" onclick="confirmBooking()" class="btn btn-danger w-100">Confirm Booking</button>
+                    </form>
+                </div>    
+            </div>
+        </div>
     </div>
-  </div>
+    <div class="modal fade" id="cartModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">Your Order Summary</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <ul id="cart-items-list" class="list-group mb-3">
+                    </ul>
+                <div class="border-top pt-2">
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal:</span> <span id="cart-subtotal">$0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between text-muted">
+                        <span>Tax (15%):</span> <span id="cart-tax">$0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold h5">
+                        <span>Total:</span> <span id="cart-total">$0.00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger w-100">Proceed to Payment</button>
+            </div>
+        </div>
+    </div>
 </div>
-
-    <footer class="bg-dark text-white text-center py-4 mt-5">
-        <p>&copy; 2026 Taste Haven. All rights reserved. | Enjoy responsibly</p>
-    </footer>
-
-        <!-- Screen-reader only live region for accessibility announcements -->
-        <div id="sr-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js"></script> 
 </body>
-
 </html>
