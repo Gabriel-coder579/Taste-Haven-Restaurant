@@ -1,126 +1,53 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
-}
 
 .hero-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-bottom: 5px solid #dc3545;
-}
-
-.hero-section h1 {
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.product-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-}
-
-@media (max-width: 992px) {
-    .product-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 576px) {
-    .product-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-.product-card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: silver;
+    background-size: cover;
+    background-position: center;
+    height: 60vh; /*60% height*/
     display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.product-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.2);
-}
-
-.product-image-wrapper {
-    position: relative;
-    overflow: hidden;
-    height: 250px;
-}
-
-.product-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.product-card:hover .product-image {
-    transform: scale(1.1);
-}
-
-.price-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: #dc3545;
-    color: white;
-    padding: 8px 14px;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 1.1rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.product-content {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.product-name {
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 8px;
-    font-size: 1.2rem;
-}
-
-.product-card .btn {
-    margin-top: auto;
-    font-weight: 600;
-    padding: 10px 20px;
-    transition: all 0.3s ease;
-}
-
-.product-card .btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
-}
-
-.col-12 {
-    display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
-.btn {
-    color: white;
-    font-weight: bolder;
-    font-style: italic;
 
+/*Making product cards lift when mouse is over them*/
+.product-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden; /*keeps the image corners rounded*/
 }
-.btn:hover {
-    color: white;
-    background-color: black;
+.product-card:hover {
+    transform: translateY(-10px); /*makes the card move up slightly when you touch it*/
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+/*Making the price badge to pop*/
+.price-badge {
+    background-color: #ffc107; /*golden yellow*/
+    color: #000; /*dark text*/
+    font-weight: bold;
+    border-radius: 50px;
+    padding: 5px 15px;
+}
+html, body {
+    scroll-behavior: smooth; /*smooth scrolling effect*/
+}
+/* Making all images the same height so the cards line up perfectly */
+.product-card img {
+    height: 200px;
+    object-fit: cover; /* This crops the image instead of squashing it */
+}
+
+/* Centering the menu row and add space */
+#product-list {
+    justify-content: center; /* This centers the items if a row isn't full */
+    margin-top: 20px;
+}
+
+/* The cards take up full height even if text length is different */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
